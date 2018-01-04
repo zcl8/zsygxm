@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+				
+			}
+			ul,li{list-style: none;}
+			
+			#box ul,#box2 ul{
+				width:500px ;
+				height: 35px;
+				border: 1px solid;
+			}
+			#box ul li,#box2 ul li{
+				width: 19.6%;
+				height: 35px;
+				border: 1px solid;
+				float: left;
+				text-align: center;
+				line-height: 35px;
+			}
+			
+			#box div,#box2 div{
+				width: 500px;
+				height: 300px;
+				border: 1px solid;
+				text-align: center;
+				line-height: 300px;
+				display: none;
+			}
+			.ys{
+				background: red;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box">
+			<ul>
+				<li class="ys">1</li>
+				<li>2</li>
+				<li>3</li>
+				<li>4</li>
+				<li>5</li>
+			</ul>
+			<div style="display: block;">1</div>
+			<div>2</div>
+			<div>3</div>
+			<div>4</div>
+			<div>5</div>
+		</div>
+		<br>
+		<br>
+		<br>
+		<div id="box2">
+			<ul>
+				<li class="ys">1</li>
+				<li>2</li>
+				<li>3</li>
+				<li>4</li>
+				<li>5</li>
+			</ul>
+			<div style="display: block;">1</div>
+			<div>2</div>
+			<div>3</div>
+			<div>4</div>
+			<div>5</div>
+		</div>
+	</body>
+	<script>
+		class Xxk {
+			constructor(id){
+				if(!id)return;
+				this.box = document.getElementById(id);
+				this.li = this.box.getElementsByTagName("li");
+				this.div = this.box.getElementsByTagName("div");
+				
+				this.init()
+			}
+			init(){
+				var _this=this;
+				for(let i=0;i<this.li.length;i++){
+					this.li[i].onclick=function(){
+						this.fnClick(i)
+					}.bind(this);
+				}
+			}
+			fnClick(index){
+				for(var i=0;i<this.li.length;i++){
+					this.li[i].className='';
+					this.div[i].style.display='none';
+				}
+				this.li[index].className='ys';
+				this.div[index].style.display='block';
+			}
+		}
+		
+		class XxkAuto extends Xxk{
+			constructor(id){
+				super(id);
+				this.iNow=0;
+				
+				this.fnAutoPlay();
+			}
+			fnNext(){
+				this.iNow++;
+				this.iNow%=this.li.length;
+				this.fnClick(this.iNow);
+			}
+			fnAutoPlay(){
+				setInterval(function(){
+					this.fnNext();
+				}.bind(this),500)
+			}
+		}
+		
+		window.onload=function(){
+			new Xxk('box')
+			new XxkAuto('box2')
+		}
+	</script>
+</html>
